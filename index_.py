@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# фыв
 import random
 
 def out(array):
@@ -8,6 +10,10 @@ def out(array):
 
 ###################################################
 
+def invert(arr):
+    return arr[::-1]
+
+###################################################
 def shift(array):
 
     t_array=[]
@@ -49,41 +55,33 @@ DIRECTIONS={
 }
 ##################################################
 
+
 def work(arr,dir,invert):
     for x in range(0,4):
-        if invert:
-            tmp=arr[DIRECTIONS[dir](x)]
-            tmp=shift(tmp[::-1])
-            arr[DIRECTIONS[dir](x)]=tmp[::-1]
-        else:
-            arr[DIRECTIONS[dir](x)]=shift(arr[DIRECTIONS[dir](x)])
+        arr[DIRECTIONS[dir](x)]=shift(arr[DIRECTIONS[dir](x)],invert)
     arr=add_new_elem(arr,1)
     return arr
 
-##################################################
+#-----------------------------------------------------------------------
+
+def make_command(func, *args):
+    return {
+            'func':func,
+            'args':(args)
+            }
 
 arr = [2,0,0,2,
        0,0,4,2,
        0,0,0,0,
        0,0,0,0]
 
-event_map = {
-        'w': {'func':work,
-              'args':(arr, BY_COLUMN, False)
-              },
-        'a': {'func':work,
-              'args':(arr, BY_ROW, False)
-              },
-        's': {'func':work,
-              'args':(arr, BY_COLUMN, True)
-              },
-        'd': {'func':work,
-              'args':(arr, BY_ROW, True)
-              },
-        'n': {'func':add_new_elem,
-              'args':(arr, 2, True)
-              },
 
+event_map = {
+        'w': make_command(work,arr, BY_COLUMN, False),
+        'a': make_command(work,arr, BY_ROW, False),
+        's': make_command(work,arr, BY_COLUMN, True),
+        'd': make_command(work,arr, BY_ROW, True),
+        'n': make_command(add_new_elem,arr, 2, True),
     }
 
 ##################################################
