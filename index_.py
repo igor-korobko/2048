@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import game
-
-def out(array):
-    for x in range(0,4*4,4):
-        q=array[x:x+4]
-        print(q)
-    print("\n")
+import printer
 
 ###################################################
 
@@ -25,8 +20,9 @@ def getKey():
 ###################################################
 
 g2048 = game.game2048()
+prin = printer.printer()
 
-out(g2048.arr)
+prin.out(g2048.arr)
 
 event_map = {
         'w': make_command(g2048.work, g2048.BY_COLUMN, False),
@@ -44,7 +40,7 @@ while k:
         # print(func)
         # exit()
         arr=func['func'](*func['args'])
-        out(arr)
+        prin.out(arr)
     else: k=False
 
 # print(DIRECTIONS[BY_ROW](1))
