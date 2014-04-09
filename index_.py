@@ -8,7 +8,7 @@ import printer
 def make_command(func, *args):
     return {
             'func':func,
-            'args':(args)
+            'args':args
             }
 
 ###################################################
@@ -19,29 +19,30 @@ def getKey():
 
 ###################################################
 
-g2048 = game.game2048()
-prin = printer.printer()
+if __name__=='main':
+    g2048 = game.game2048()
 
-prin.out(g2048.arr)
+    prin = printer.printer()
+    prin.out(g2048.arr)
 
-event_map = {
-        'w': make_command(g2048.work, g2048.BY_COLUMN, False),
-        'a': make_command(g2048.work, g2048.BY_ROW, False),
-        's': make_command(g2048.work, g2048.BY_COLUMN, True),
-        'd': make_command(g2048.work, g2048.BY_ROW, True),
-        'n': make_command(g2048.add_new_elem, 2, True),
-    }
+    event_map = {
+            'w': make_command(g2048.work, g2048.BY_COLUMN, False),
+            'a': make_command(g2048.work, g2048.BY_ROW, False),
+            's': make_command(g2048.work, g2048.BY_COLUMN, True),
+            'd': make_command(g2048.work, g2048.BY_ROW, True),
+            'n': make_command(g2048.add_new_elem, 2, True),
+        }
 
-k=True
-while k:
-    k=getKey()
-    if k in event_map:
-        func=event_map[k]
-        # print(func)
-        # exit()
-        arr=func['func'](*func['args'])
-        prin.out(arr)
-    else: k=False
+    k=True
+    while k:
+        k=getKey()
+        if k in event_map:
+            func=event_map[k]
+            # print(func)
+            # exit()
+            arr=func['func'](*func['args'])
+            prin.out(arr)
+        else: k=False
 
 # print(DIRECTIONS[BY_ROW](1))
 
