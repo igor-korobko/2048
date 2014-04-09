@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class printer:
+class Printer:
 
     def out(self,array):
         for x in range(0,4*4,4):

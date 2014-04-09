@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import random
 
-class game2048:
-
-    arr=[]
-    BY_ROW = 1
-    BY_COLUMN = 2
-    DIRECTIONS={
+BY_ROW = 1
+BY_COLUMN = 2
+DIRECTIONS={
         BY_ROW:lambda row:slice(row*4,row*4+4),
         BY_COLUMN:lambda col:slice(col,4*4,4)
-    }
+}
+
+class Game2048:
+
+    arr=[]
+
     inv=False
 
     def __init__(self):
@@ -53,6 +55,6 @@ class game2048:
     def work(self,dir,invert=False):
         self.inv=invert
         for x in range(0,4):
-            self.arr[self.DIRECTIONS[dir](x)]=self.shift(self.arr[self.DIRECTIONS[dir](x)])
+            self.arr[DIRECTIONS[dir](x)]=self.shift(self.arr[DIRECTIONS[dir](x)])
         self.add_new_elem(1)
         return self.arr
