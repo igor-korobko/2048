@@ -3,21 +3,15 @@
 import game
 import printer
 
-###################################################
-
 def make_command(func, *args):
     return {
             'func':func,
             'args':args
             }
 
-###################################################
-
 def getKey():
     q=raw_input()
     return q[0]
-
-###################################################
 
 if __name__=='main':
     g2048 = game.game2048()
@@ -38,12 +32,10 @@ if __name__=='main':
         k=getKey()
         if k in event_map:
             func=event_map[k]
-            # print(func)
-            # exit()
             arr=func['func'](*func['args'])
             prin.out(arr)
         else: k=False
 
-# print(DIRECTIONS[BY_ROW](1))
+
 
 

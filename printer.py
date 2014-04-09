@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class printer:
+
     def out(self,array):
         for x in range(0,4*4,4):
             q=array[x:x+4]

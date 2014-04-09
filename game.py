@@ -19,7 +19,6 @@ class game2048:
     def invertArr(self,array):
         return array[::-1]
 
-    ###################################################
     def shift(self,array):
         if self.inv:
             array=self.invertArr(array)
@@ -41,8 +40,6 @@ class game2048:
             t_array=self.invertArr(t_array)
         return t_array
 
-    ###################################################
-
     def add_new_elem(self,countNewElem=1,clearBeforeAdd=False):
 
         if(clearBeforeAdd):
@@ -52,10 +49,6 @@ class game2048:
         for cell in sample:
             self.arr[cell[0]] = 2
         return self.arr
-
-
-    ##################################################
-
 
     def work(self,dir,invert=False):
         self.inv=invert
