@@ -56,4 +56,3 @@ class game2048:
             self.arr[self.DIRECTIONS[dir](x)]=self.shift(self.arr[self.DIRECTIONS[dir](x)])
         self.add_new_elem(1)
         return self.arr
-

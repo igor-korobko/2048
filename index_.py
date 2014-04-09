@@ -35,7 +35,3 @@ if __name__=='main':
             arr=func['func'](*func['args'])
             prin.out(arr)
         else: k=False
-
-
-
-
