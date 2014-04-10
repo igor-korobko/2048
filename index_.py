@@ -5,6 +5,12 @@ from printer import Printer
 from db import DB
 
 
+def key_gen():
+#     генератор ключа......
+#   return key
+    pass
+
+
 def make_command(func, *args):
     return {'func': func,
             'args': args
@@ -16,11 +22,31 @@ def get_key():
     return q[0]
 
 
+def what_do():
+#   спрашивает следить за кем то или
+#
+#     if action == 1 #начать новую игру
+#         # ....
+#
+#     if action == 2 #продолжить
+#         # ....
+#
+#     if action == 3 #следить
+#         # ....
+#  ну или как-то по другому
+    pass
+
+
+
 if __name__ == '__main__':
 
-    g2048 = Game2048()
+    some_value = what_do()
+    #..............
+     db = DB()
+   # .............
+    g2048 = Game2048()# сюда передавать массив из базы
     print_ = Printer()
-    db = DB()
+
 
     print_.out(g2048.arr)
 
