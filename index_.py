@@ -37,7 +37,6 @@ def what_do():
     pass
 
 
-
 if __name__ == '__main__':
 
     some_value = what_do()
