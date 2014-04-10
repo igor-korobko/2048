@@ -5,7 +5,7 @@ from printer import Printer
 from db import DB
 from optparse import OptionParser
 import random
-
+import redis
 
 def key_gen():
     return random.randint(1, 1000)
@@ -26,7 +26,7 @@ def what_do():
     parser = OptionParser(usage="python index_.py -k int (access key) "
                                 # "\n -n 1 or 0 (new game true or false) "
                                 "\n -c int (key for continue)")
-    parser.add_option("-k", type="int", dest="key", default="0")
+    parser.add_option("-k", type="int", dest="watch", default="0")
     # parser.add_option("-n", type="int", dest="new_game", default="0")
     parser.add_option("-c", type="int", dest="play", default="0")
     (options, args) = parser.parse_args()
@@ -37,8 +37,8 @@ def what_do():
     if options.play != 0:
         return make_command(play, options.play)
 
-    elif options.key != 0:
-        return make_command(watch, options.key)
+    elif options.watch != 0:
+        return make_command(watch, options.watch)
 
     else:
         return make_command(play, 0)
@@ -80,16 +80,28 @@ def play(key):
         else:
             k = False
 
+def listener():
+    print("HELLO")
 
-def watch():
-    pass
+def watch(key):
+    print("watch:")
+    print(key[0])
+    k=key[0]
+    r = redis.Redis()
+    p = r.pubsub()
+    p.psubscribe(str(k))
+    while 1:
+        for m in p.listen():
+                # if m['type']=="pmessage":
+            print(m)
+
 
 # -------------------------------------------------------
 if __name__ == '__main__':
-
     action = what_do()
     # print(action["args"])
     action["func"](action["args"])
+    # watch(956)
 
 
 
