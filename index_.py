@@ -3,12 +3,12 @@
 from game import Game2048, BY_COLUMN, BY_ROW
 from printer import Printer
 from db import DB
+from optparse import OptionParser
+import random
 
 
 def key_gen():
-#     генератор ключа......
-#   return key
-    pass
+    return random.randint(1, 1000)
 
 
 def make_command(func, *args):
@@ -23,37 +23,51 @@ def get_key():
 
 
 def what_do():
-#   спрашивает следить за кем то или
-#
-#     if action == 1 #начать новую игру
-#         # ....
-#
-#     if action == 2 #продолжить
-#         # ....
-#
-#     if action == 3 #следить
-#         # ....
-#  ну или как-то по другому
-    pass
+    parser = OptionParser(usage="python index_.py -k int (access key) "
+                                # "\n -n 1 or 0 (new game true or false) "
+                                "\n -c int (key for continue)")
+    parser.add_option("-k", type="int", dest="key", default="0")
+    # parser.add_option("-n", type="int", dest="new_game", default="0")
+    parser.add_option("-c", type="int", dest="play", default="0")
+    (options, args) = parser.parse_args()
+
+    # if options.new_game != 0:
+    #     return make_command(new_game, 1)
+
+    if options.play != 0:
+        return make_command(play, options.play)
+
+    elif options.key != 0:
+        return make_command(watch, options.key)
+
+    else:
+        return make_command(play, 0)
 
 
-if __name__ == '__main__':
+def play(key):
+    print(key[0])
+    user_key = key[0]
 
-    some_value = what_do()
-    #..............
-     db = DB()
-   # .............
-    g2048 = Game2048()# сюда передавать массив из базы
+    db = DB()
+    arr = 0
+
+    if user_key != 0:
+        arr = db.get(user_key)
+    else:
+        user_key = key_gen()
+
+    g2048 = Game2048(arr)
+    print("user_key:"+user_key.__str__())
+
     print_ = Printer()
-
-
     print_.out(g2048.arr)
 
     event_map = {'w': make_command(g2048.work, BY_COLUMN, False),
                  'a': make_command(g2048.work, BY_ROW, False),
                  's': make_command(g2048.work, BY_COLUMN, True),
                  'd': make_command(g2048.work, BY_ROW, True),
-                 'n': make_command(g2048.add_new_elem, 2, True)
+                 'n': make_command(g2048.add_new_elem, 2, True),
+                 'm': make_command(db.save, g2048.arr, user_key)
                  }
 
     k = True
@@ -65,4 +79,21 @@ if __name__ == '__main__':
             print_.out(arr)
         else:
             k = False
+
+
+def watch():
+    pass
+
+# -------------------------------------------------------
+if __name__ == '__main__':
+
+    action = what_do()
+    # print(action["args"])
+    action["func"](action["args"])
+
+
+
+
+
+
 

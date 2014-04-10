@@ -10,12 +10,15 @@ DIRECTIONS = {BY_ROW: lambda row: slice(row * 4, row * 4 + 4),
 
 class Game2048:
 
-    arr = []
+    arr = [0]*(4*4)
     inv = False
 
-    def __init__(self):
-        self.arr = [0]*(4*4)
-        self.add_new_elem(2)
+    def __init__(self, array=0):
+        if array != 0:
+            self.arr = array
+            print(array)
+        else:
+            self.add_new_elem(2)
 
     def invert_arr(self, array):
         return array[::-1]
