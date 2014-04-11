@@ -42,8 +42,8 @@ def what_do():
 
 
 def play(key):
-    print(key[0])
-    user_key = key[0]
+    print(key)
+    user_key = key
 
     db = DB()
     arr = 0
@@ -82,7 +82,7 @@ def play(key):
 def watch(key, server):
 
     print_ = Printer()
-    k = str(key[0])
+    k = str(key)
     subscr = Subscribe(server)
 
     while 1:
@@ -93,4 +93,4 @@ def watch(key, server):
 # -------------------------------------------------------
 if __name__ == '__main__':
     action = what_do()
-    action["func"](action["args"])
+    action["func"](*action["args"])
