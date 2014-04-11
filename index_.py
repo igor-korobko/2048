@@ -2,10 +2,10 @@
 
 from game import Game2048, BY_COLUMN, BY_ROW
 from printer import Printer
-from db import DB
+from db import DB, Subscribe
 from optparse import OptionParser
 import random
-import redis
+
 
 def key_gen():
     return random.randint(1, 1000)
@@ -86,17 +86,11 @@ def watch(key):
 
     print_ = Printer()
     k = str(key[0])
-    r = redis.Redis()
-    p = r.pubsub()
-    p.psubscribe(k)
+    subscr = Subscribe()
+
     while 1:
-        for m in p.listen():
-                if m['pattern'] == k and m['channel'] == k:
-                    array = []
-                    s = m["data"][slice(1, -1)]
-                    for i in s.split(", "):
-                        array.append(int(i))
-                    print_.out(array)
+        array = subscr.subscribe(k)
+        print_.out(array)
 
 
 # -------------------------------------------------------

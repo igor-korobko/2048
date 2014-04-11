@@ -26,3 +26,24 @@ class DB:
 
     def publish(self, array, key):
         self.connection.publish(key, array)
+
+
+class Subscribe:
+
+    r = 0
+
+    def __init__(self):
+        self.r = redis.Redis(host='localhost', port=6379, db=7)
+
+    def subscribe(self, key):
+
+        p = self.r.pubsub()
+        p.psubscribe(key)
+
+        for m in p.listen():
+                if m['pattern'] == key and m['channel'] == key:
+                    array = []
+                    s = m["data"][slice(1, -1)]
+                    for i in s.split(", "):
+                        array.append(int(i))
+                    return array
