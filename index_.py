@@ -103,10 +103,3 @@ def watch(key):
 if __name__ == '__main__':
     action = what_do()
     action["func"](action["args"])
-
-
-
-
-
-
-

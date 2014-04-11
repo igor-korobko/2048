@@ -13,6 +13,7 @@ class DB:
     def save(self, array, key):
         self.connection.delete(key)
         self.connection.set(key, array)
+        self.connection.publish(key, array)
         return array
 
     def get(self, key):
@@ -22,3 +23,6 @@ class DB:
         for i in s.split(", "):
             array.append(int(i))
         return array
+
+    def publish(self, array, key):
+        self.connection.publish(key, array)
