@@ -67,7 +67,7 @@ def play(key):
                  's': make_command(g2048.work, BY_COLUMN, True),
                  'd': make_command(g2048.work, BY_ROW, True),
                  'n': make_command(g2048.add_new_elem, 2, True),
-                 'm': make_command(db.save, g2048.arr, user_key)
+                 'm': make_command(db.save, arr, user_key)
                  }
 
     k = True
@@ -76,32 +76,33 @@ def play(key):
         if k in event_map:
             func = event_map[k]
             arr = func['func'](*func['args'])
+            db.publish(arr, user_key)
             print_.out(arr)
         else:
             k = False
 
-def listener():
-    print("HELLO")
 
 def watch(key):
-    print("watch:")
-    print(key[0])
-    k=key[0]
+
+    print_ = Printer()
+    k = str(key[0])
     r = redis.Redis()
     p = r.pubsub()
-    p.psubscribe(str(k))
+    p.psubscribe(k)
     while 1:
         for m in p.listen():
-                # if m['type']=="pmessage":
-            print(m)
+                if m['pattern'] == k and m['channel'] == k:
+                    array = []
+                    s = m["data"][slice(1, -1)]
+                    for i in s.split(", "):
+                        array.append(int(i))
+                    print_.out(array)
 
 
 # -------------------------------------------------------
 if __name__ == '__main__':
     action = what_do()
-    # print(action["args"])
     action["func"](action["args"])
-    # watch(956)
 
 
 
