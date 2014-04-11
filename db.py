@@ -8,7 +8,7 @@ class DB:
     connection = 0
 
     def __init__(self):
-        self.connection = redis.StrictRedis(host='localhost', port=6379, db=7)
+        self.connection = redis.StrictRedis(host='0.0.0.0', port=6379, db=7)
 
     def save(self, array, key):
         self.connection.delete(key)
@@ -32,8 +32,8 @@ class Subscribe:
 
     r = 0
 
-    def __init__(self):
-        self.r = redis.Redis(host='localhost', port=6379, db=7)
+    def __init__(self, server):
+        self.r = redis.Redis(host=server, port=6379, db=7)
 
     def subscribe(self, key):
 

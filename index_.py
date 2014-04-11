@@ -27,18 +27,15 @@ def what_do():
                                 # "\n -n 1 or 0 (new game true or false) "
                                 "\n -c int (key for continue)")
     parser.add_option("-k", type="int", dest="watch", default="0")
-    # parser.add_option("-n", type="int", dest="new_game", default="0")
+    parser.add_option("-s", type="string", dest="server", default="localhost")
     parser.add_option("-c", type="int", dest="play", default="0")
     (options, args) = parser.parse_args()
-
-    # if options.new_game != 0:
-    #     return make_command(new_game, 1)
 
     if options.play != 0:
         return make_command(play, options.play)
 
     elif options.watch != 0:
-        return make_command(watch, options.watch)
+        return make_command(watch, options.watch, options.server)
 
     else:
         return make_command(play, 0)
@@ -82,11 +79,11 @@ def play(key):
             k = False
 
 
-def watch(key):
+def watch(key, server):
 
     print_ = Printer()
     k = str(key[0])
-    subscr = Subscribe()
+    subscr = Subscribe(server)
 
     while 1:
         array = subscr.subscribe(k)
